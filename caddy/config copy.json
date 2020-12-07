@@ -1,0 +1,37 @@
+{
+  "admin": {"disabled": true},
+  "apps": {
+  	"http": {
+  	  "servers": {
+  	  	"srv0": {
+  	  	  "listen": [":80"],
+  	  	  "routes": [{
+  	  	  	  "handle": [{
+  	  	  	  	  "handler": "vars",
+  	  	  	  	  "root": "D:\\迅雷下载\\test\\Allin1\\www"
+  	  	  	  	},{
+  	  	  	  	  "handler": "encode",
+  	  	  	  	  "encodings": { "gzip": {} }
+				}
+			  ]
+  	  	  	},{
+			  "handle": [{
+			    "handler": "file_server"
+			    }
+			  ]
+			},{
+  	  	  	  "match": [{
+  	  	  	  	  "path": ["/v288ipmmncOJLAWq6x"]
+  	  	  	  	}],
+  	  	  	  "handle": [{
+  	  	  	  	  "handler": "reverse_proxy",
+  	  	  	  	  "upstreams": [{ "dial": "127.0.0.1:8000" }]
+				}
+			  ]
+  	  	  	}
+  	  	  ]
+  	  	}
+  	  }
+  	}
+  }
+}

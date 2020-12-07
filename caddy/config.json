@@ -1,0 +1,49 @@
+{
+  "admin": {"disabled": true},
+  "apps": {
+  	"http": {
+  	  "servers": {
+  	  	"srv0": {
+  	  	  "listen": [":80"],
+  	  	  "routes": [{
+  	  	  	  "handle": [{
+  	  	  	  	  "handler": "vars",
+  	  	  	  	  "root": "/var/www"
+  	  	  	  	},{
+  	  	  	  	  "handler": "encode",
+  	  	  	  	  "encodings": { "gzip": {} }
+				}
+			  ]
+  	  	  	},{
+			  "handle": [{
+			    "handler": "file_server"
+			    }
+			  ]
+			},{
+			  "match": [{"host": [ "n1.rancher.com" ]}],
+			  "handle": [{
+				  "handler": "forward_proxy",
+				  "hide_ip": true,
+				  "hide_via": true,
+				  "auth_user": "Bob",
+				  "auth_pass": "123456"
+				}
+			  ],
+			  "terminal": true
+			},{
+  	  	  	  "match": [{
+				  "host": ["v1.rancher.com"],
+  	  	  	  	  "path": ["/v288ipmmncOJLAWq6x"]
+  	  	  	  	}],
+  	  	  	  "handle": [{
+  	  	  	  	  "handler": "reverse_proxy",
+  	  	  	  	  "upstreams": [{ "dial": "127.0.0.1:8000" }]
+				}
+			  ]
+  	  	  	}
+  	  	  ]
+  	  	}
+  	  }
+  	}
+  }
+}
